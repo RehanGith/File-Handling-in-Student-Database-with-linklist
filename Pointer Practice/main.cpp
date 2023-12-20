@@ -32,12 +32,11 @@ void create_database(Snode*& first, int nn) {
         cout << "Enter Data for Student Number: " << i + 1 << endl;
         cout << "Enter student reg number: ";
         cin >> cur->regNum;
+        cin.ignore();
         cout << "Enter student name: ";
-        cin >> cur->name;
-        cin.ignore(30, '\n');
+        getline(cin, cur->name);
         cout << "Enter student father name: ";
-        cin >> cur->fname;
-        cin.ignore(30, '\n');
+        getline(cin, cur->fname);
         cout << "Enter marks (out of 100):" << endl;
         for (int j = 0; j < MAXSUB; j++)
         {
@@ -328,8 +327,7 @@ int main() {
             Snode* cur = head;
             while (cur != nullptr) {
                 outfile << cur->regNum << endl;
-                outfile << cur->name << endl;
-                outfile << cur->fname << endl;
+                outfile << cur->name << "|" << cur->fname << endl;
                 for (int i = 0; i < MAXSUB; i++) {
                     outfile << cur->marks[i] << " ";
                 }
@@ -358,32 +356,24 @@ int main() {
                 int readregNum{};
                 string readname;
                 string readfname;
-                int readmarks[MAXSUB]{};
+                int s1, s2, s3, s4, s5;
                 Date readdob{}, readdoa{};
                 float readcgpa{};
                 infile >> readregNum;
-                cin.ignore();
-                getline(infile, readname);
+                infile.ignore();
+                getline(infile, readname, '|');
                 getline(infile, readfname);
-                cin >> readmarks[0] >> readmarks[1] >> readmarks[2] >> readmarks[3] >> readmarks[4];
+                infile >> s1 >> s2 >> s3 >> s4 >> s5;
                 infile >> readdob.dd >> readdob.mm >> readdob.yy;
                 infile >> readdoa.dd >> readdoa.mm >> readdoa.yy;
                 infile >> readcgpa;
-                cout << "Result Card of Student's regNO: " << readregNum << endl;
-                cout << "-----------------------------------------------------\n";
-                cout << "| Name:  " << readname << " " << readregNum << endl;
-                cout << "| Father Name: " << readfname << endl;
-                cout << endl;
-
-                cout << "| Subject          " << "|  Marks  " << endl;
-                int sum{};
-                for (int j{ 0 }; j < MAXSUB; j++) {
-                    cout << "| Subject" << j + 1 << "         " << "|  " << readmarks[j] << endl;
-                    sum += readmarks[j];
-                }
-                cout << "======================================================\n";
-                cout << "|  Total Marks:            " << "|  " << sum << endl;
-                cout << "| CGPA:            " << "|  " << readcgpa << endl;
+                cout << "Regnum: " << readregNum << endl;
+                cout << "Name: " << readname << endl;
+                cout << "Father name: " << readfname << endl;
+                cout << "Marks of five subjects: " << s1 << " " << s2 << " " << s3 << " " << s4 << " " << s5 << endl;
+                cout  << "Data of Birth: " << readdob.dd << " " << readdob.mm << " " << readdob.yy << endl;
+                cout << readdoa.dd << " " << readdoa.mm << " " << readdoa.yy << endl;
+                cout << readcgpa << endl;
                 cur = cur->next;
             }
             infile.close();
